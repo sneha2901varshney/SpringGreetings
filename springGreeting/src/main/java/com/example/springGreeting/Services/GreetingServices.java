@@ -4,6 +4,7 @@ import com.example.springGreeting.Entities.MessageEntity;
 import com.example.springGreeting.Repository.GreetingRepository;
 import com.example.springGreeting.model.Greeting;
 import org.springframework.stereotype.Service;
+
 @Service
 public class GreetingServices {
     String greeting;
@@ -26,6 +27,12 @@ public class GreetingServices {
 
         Info.setMessageID(me.getId());
 
+        return Info;
+    }
+    public Greeting findbyID(Long ID){
+        MessageEntity me = greetingRepository.findById(ID).orElseThrow(()->new RuntimeException("No Record Found"));
+        Greeting Info = new Greeting(me.getMessage());
+        Info.setMessageID(me.getId());
         return Info;
     }
 }

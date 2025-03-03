@@ -4,7 +4,6 @@ import com.example.springGreeting.model.Greeting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import jakarta.websocket.server.PathParam;
-
 @RestController
 @RequestMapping("/greeting")
 public class GreetingController {
@@ -56,4 +55,9 @@ public class GreetingController {
     public String save(@RequestBody Greeting message){
         return greetingServices.save(message).getMessage();
     }
+    @GetMapping("/find/{ID}")
+    public Greeting findbyID(@PathVariable Long ID){
+        return greetingServices.findbyID(ID);
+    }
+
 }
