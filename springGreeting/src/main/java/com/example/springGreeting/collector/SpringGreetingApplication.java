@@ -1,4 +1,4 @@
-package com.example.springGreeting;
+package com.example.springGreeting.collector;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
