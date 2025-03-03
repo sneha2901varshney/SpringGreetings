@@ -51,4 +51,9 @@ public class GreetingController {
         else
             return "Hello, Welcome to Application";
     }
+
+    @PostMapping("/save")
+    public String save(@RequestBody Greeting message){
+        return greetingServices.save(message).getMessage();
+    }
 }
