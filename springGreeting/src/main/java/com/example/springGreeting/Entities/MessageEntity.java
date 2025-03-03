@@ -1,13 +1,13 @@
 package com.example.springGreeting.Entities;
 
+import com.example.springGreeting.model.Greeting;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 @Entity
-public class MessageEntity
-{
-        String message;
+public class MessageEntity {
+String message;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
