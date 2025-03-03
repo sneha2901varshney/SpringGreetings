@@ -4,6 +4,8 @@ import com.example.springGreeting.model.Greeting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import jakarta.websocket.server.PathParam;
+import java.util.List;
+
 @RestController
 @RequestMapping("/greeting")
 public class GreetingController {
@@ -58,6 +60,11 @@ public class GreetingController {
     @GetMapping("/find/{ID}")
     public Greeting findbyID(@PathVariable Long ID){
         return greetingServices.findbyID(ID);
+    }
+    @GetMapping("/all")
+    public List<Greeting> getAll(){
+        return greetingServices.getAll();
+
     }
 
 }
