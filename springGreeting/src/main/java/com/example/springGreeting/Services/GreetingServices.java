@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Service
 public class GreetingServices {
     @Autowired
@@ -53,4 +52,12 @@ public class GreetingServices {
         }).collect(Collectors.toList());
         return list;
     }
-}
+    public Greeting updateByID(Greeting message, Long ID){
+        MessageEntity me = greetingRepository.findById(ID).orElseThrow(()->new RuntimeException("No Record Found"));
+        me.setMessage(message.getMessage());
+        greetingRepository.save(me);
+        Greeting Info = new Greeting(me.getMessage());
+        Info.setMessageID(me.getId());
+        return Info;
+    }
+}}

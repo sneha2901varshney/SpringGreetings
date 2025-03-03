@@ -9,31 +9,31 @@ public class MessageEntity
 {
         String message;
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        Long id;
-        public MessageEntity(String message) {
-            this.message = message;
-            id = null;
-        }
-
-        public MessageEntity() {
-
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public Long getId() {
-            return id;
-        }
-
-        public void setId(Long id) {
-            this.id = id;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    Long id;
+    public MessageEntity(String message) {
+        this.message = message;
+        id = null;
     }
+
+    public MessageEntity() {
+
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+}
