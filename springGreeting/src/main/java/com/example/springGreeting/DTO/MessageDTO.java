@@ -1,5 +1,6 @@
 package com.example.springGreeting.DTO;
 
+
 public class MessageDTO {
 
     String message;

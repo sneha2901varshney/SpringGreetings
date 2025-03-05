@@ -1,80 +1,87 @@
 package com.example.springGreeting.collector;
-
+import com.example.springGreeting.DTO.MessageDTO;
+import com.example.springGreeting.Repository.GreetingRepository;
 import com.example.springGreeting.Services.GreetingServices;
-import com.example.springGreeting.model.Greeting;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import jakarta.websocket.server.PathParam;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/greeting")
+@RequestMapping("greetings")
 public class GreetingController {
 
-    GreetingServices greetingServices;
-    public GreetingController(GreetingServices greetingServices) {
-        this.greetingServices = greetingServices;
-    }
+    GreetingServices greetingService;
 
-    Greeting message;
+    public GreetingController(GreetingServices greetingService) {
+        this.greetingService = greetingService;
+    }
+    //UC1
     @GetMapping("/get")
-    public String greeting() {
-        return "Hello World";
+    public String getGreetings(){
+        return "{\"message\": \"Hello from GET Request!\"}";
     }
+
     @PostMapping("/post")
-    public String greetingPost(@RequestBody Greeting message) {
-        return "Hello Post Request from"+message.getMessage();
+    public String postGreetings(@RequestBody MessageDTO message){
+        return "{\""+message.getMessage()+": \"Hello from POST Request!\"}";
     }
+
     @PutMapping("/put/{message}")
-    public String greetingPut(@PathVariable String message) {
-        return "Hello Put Request from"+message;
-    }
-    @DeleteMapping("/delete/{message}")
-    public String greetingDelete(@PathVariable String message) {
-        return "Hello Delete Request from"+message;
-    }
-    @PatchMapping("/patch/{message}")
-    public String greetingPatch(@PathVariable String message) {
-        return "Hello Patch Request from"+message;
+    public String putGreetings(@PathVariable String message){
+        return "{\""+message+": \"Hello from PUT Request!\"}";
     }
 
-    @GetMapping("/services")
-    public String greetingServices() {
-        return greetingServices.getGreeting();
+    //UC2
+    @GetMapping("/service")
+    public String serviceGreetings(){
+        return greetingService.getGreetings();
     }
 
+    //UC3
     @GetMapping("/query")
     public String query(@PathParam("firstName") String firstName, @PathParam("lastName") String lastName){
+
         if(firstName != null && lastName != null)
-            return "Hello "+firstName+" "+lastName+"Welcome to My Application";
+            return "Hello "+firstName+" "+lastName+" Welcome to Bridgelabz";
         else if(firstName != null)
-            return "Hello "+firstName+" Welcome to Application";
+            return "Hello "+firstName+" Welcome to Bridgelabz";
         else if(lastName != null)
-            return "Hello "+lastName+" Welcome to Application";
+            return "Hello "+lastName+" Welcome to Bridgelabz";
         else
-            return "Hello, Welcome to Application";
+            return "Hello, Welcome to Bridgelabz";
     }
 
+    //UC4
     @PostMapping("/save")
-    public String save(@RequestBody Greeting message){
-        return greetingServices.save(message).getMessage();
+    public MessageDTO save(@RequestBody MessageDTO message){
+        return greetingService.saveMessage(message);
     }
-    @GetMapping("/find/{ID}")
-    public Greeting findbyID(@PathVariable Long ID){
-        return greetingServices.findbyID(ID);
-    }
-    @GetMapping("/all")
-    public List<Greeting> getAll(){
-        return greetingServices.getAll();
+
+    //UC5
+    @GetMapping("/find/{id}")
+    public MessageDTO findById(@PathVariable Long id){
+
+        return greetingService.findById(id);
 
     }
-    @PutMapping("/update/{ID}")
-    public Greeting updateByID(@RequestBody Greeting message,@PathVariable Long ID){
-        return greetingServices.updateByID(message,ID);
+
+    //UC6
+    @GetMapping("/listAll")
+    public List<MessageDTO> listAll(){
+        return greetingService.listAll();
     }
-    @DeleteMapping("/delete/{ID}")
-    public String deleteByID(@PathVariable Long ID){
-        return greetingServices.deleteByID(ID);
+
+    //UC7
+    @PostMapping("/edit/{id}")
+    public MessageDTO editById(@RequestBody MessageDTO message, @PathVariable Long id){
+        return greetingService.editById(message, id);
+    }
+
+    //UC8
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable Long id){
+        return greetingService.delete(id);
     }
 
 }
