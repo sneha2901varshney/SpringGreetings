@@ -1,6 +1,7 @@
 package com.example.springGreeting.collector;
 
 import com.example.springGreeting.DTO.LoginDTO;
+import com.example.springGreeting.DTO.MailDTO;
 import com.example.springGreeting.DTO.MessageDTO;
 import com.example.springGreeting.DTO.AuthUserDTO;
 import com.example.springGreeting.Services.AuthenticationService;
@@ -30,6 +31,13 @@ public class UserController {
     @PostMapping(path ="/login")
     public String login(@RequestBody LoginDTO user){
         return authenticationService.login(user);
+    }
+
+    //UC11 --> For sending mail to another person
+    @PostMapping(path = "/sendMail")
+    public String sendMail(@RequestBody MailDTO message){
+        emailService.sendEmail(message.getTo(), message.getSubject(), message.getBody());
+        return "Mail sent";
     }
 
 }
