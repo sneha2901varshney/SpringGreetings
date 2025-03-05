@@ -40,4 +40,5 @@ public class UserController {
         return "Mail sent";
     }
 
+    //UC12 --> Added Swagger Config to use Swagger at url(/swagger)
 }
