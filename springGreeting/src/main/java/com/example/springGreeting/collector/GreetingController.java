@@ -1,4 +1,5 @@
 package com.example.springGreeting.collector;
+
 import com.example.springGreeting.Services.GreetingServices;
 import com.example.springGreeting.model.Greeting;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ public class GreetingController {
     public GreetingController(GreetingServices greetingServices) {
         this.greetingServices = greetingServices;
     }
+
     Greeting message;
     @GetMapping("/get")
     public String greeting() {
