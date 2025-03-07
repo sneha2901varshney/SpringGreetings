@@ -3,7 +3,6 @@ import com.example.springGreeting.DTO.MessageDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
 public interface IGreetingInterface {
 
