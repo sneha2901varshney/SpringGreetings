@@ -1,6 +1,8 @@
 package com.example.springGreeting.Services;
 import com.example.springGreeting.DTO.AuthUserDTO;
 import com.example.springGreeting.DTO.LoginDTO;
+import com.example.springGreeting.DTO.PassDTO;
+import com.example.springGreeting.Interfaces.IAuthInterface;
 import com.example.springGreeting.model.AuthUser;
 import com.example.springGreeting.Repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -8,11 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 @Service
-public class AuthenticationService {
+public class AuthenticationService implements IAuthInterface {
 
-    UserRepository userRepository;
+    private final UserRepository userRepository;
     EmailService emailService;
     JwtTokenService jwtTokenService;
 
@@ -44,7 +45,7 @@ public class AuthenticationService {
         userRepository.save(newUser);
 
         //sending the confirmation mail to the user
-        emailService.sendEmail(user.getEmail(), "Regitration Status", user.getFirstName()+" you are registered!");
+        emailService.sendEmail(user.getEmail(), "Your Account is Ready!", "UserName : "+user.getFirstName()+" "+user.getLastName()+"\nEmail : "+user.getEmail()+"\nYou are registered!\nBest Regards,\nBridgelabz Team");
 
         return "user registered";
     }
@@ -75,5 +76,31 @@ public class AuthenticationService {
 
         return "user logged in"+"\ntoken : "+token;
     }
+
+    public AuthUserDTO forgotPassword(PassDTO pass, String email){
+
+        AuthUser foundUser = userRepository.findByEmail(email);
+
+        if(foundUser == null)
+            throw new RuntimeException("user not registered!");
+
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String hashpass = bCryptPasswordEncoder.encode(pass.getPassword());
+
+        foundUser.setPassword(pass.getPassword());
+        foundUser.setHashPass(hashpass);
+
+        userRepository.save(foundUser);
+
+        emailService.sendEmail(email, "Password Reset Status", "Your password has been reset");
+
+        AuthUserDTO resDto = new AuthUserDTO(foundUser.getFirstName(), foundUser.getLastName(), foundUser.getEmail(), foundUser.getPassword(), foundUser.getId() );
+
+        return resDto;
+    }
+
+
+
+
 
 }
